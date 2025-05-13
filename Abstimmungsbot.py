@@ -6,7 +6,7 @@ import os
 import csv
 import joblib
 
-TOKEN = 'Blablablablablubb'
+TOKEN = 'Blablablabla'
 GUILD_ID = 531217410246574107  # Die Server-ID
 ROLE_ID = 1369781934598783068   # ID der Rolle für @Ping
 DUMP_NAME = "data.sav"
