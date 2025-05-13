@@ -2,11 +2,16 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 from datetime import datetime, timedelta
+import json
 import os
 import csv
-import joblib
 
-TOKEN = 'Blablablabla'
+f = open("appconfig.json")
+appsettings = json.load(f)
+TOKEN = appsettings["Token"]
+
+
+f.close
 GUILD_ID = 531217410246574107  # Die Server-ID
 ROLE_ID = 1369781934598783068   # ID der Rolle für @Ping
 DUMP_NAME = "data.sav"
