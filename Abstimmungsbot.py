@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import os
 import csv
 
-TOKEN = 'Blablablabla'
+TOKEN = 'Blablablablablubb'
 GUILD_ID = 531217410246574107  # Die Server-ID
 ROLE_ID = 1369781934598783068   # ID der Rolle für @Ping
 
