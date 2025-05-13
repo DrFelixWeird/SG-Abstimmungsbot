@@ -4,17 +4,23 @@ from discord import app_commands
 from datetime import datetime, timedelta
 import os
 import csv
+import joblib
 
 TOKEN = 'Blablablabla'
 GUILD_ID = 531217410246574107  # Die Server-ID
 ROLE_ID = 1369781934598783068   # ID der Rolle für @Ping
+DUMP_NAME = "data.sav"
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 # Laufzeit-Speicher
-abstimmungen = {}  # {sg_nummer: AbstimmungsView}
-
+try:
+    abstimmungen = joblib.load(DUMP_NAME)
+except:
+    abstimmungen = {}  # {sg_nummer: AbstimmungsView}
+    joblib.dump(abstimmungen, DUMP_NAME)
+    
 
 class AbstimmungsView(discord.ui.View):
     def __init__(self, sg_nummer, frage, anonym, ersteller, dauer_stunden):
@@ -134,6 +140,7 @@ async def abstimmung(interaction: discord.Interaction, nummer: int, servername: 
     await interaction.channel.send(f"<@&{ROLE_ID}>")
 
     abstimmungen[sg_nummer] = view
+    joblib.dump(abstimmungen, DUMP_NAME)
 
 
 @bot.tree.command(name="abstimmung_frei", description="Starte eine freie Abstimmung", guild=discord.Object(id=GUILD_ID))
@@ -166,6 +173,7 @@ async def abstimmung_frei(interaction: discord.Interaction, nummer: int, frage: 
     await interaction.channel.send(f"<@&{ROLE_ID}>")
 
     abstimmungen[sg_nummer] = view
+    joblib.dump(abstimmungen, DUMP_NAME)
 
 
 @bot.tree.command(name="abstimmung_beenden", description="Beende eine laufende Abstimmung", guild=discord.Object(id=GUILD_ID))
@@ -186,6 +194,7 @@ async def abstimmung_beenden(interaction: discord.Interaction, nummer: int):
     await view.post_results()
     view.stop()
     abstimmungen.pop(sg_nummer, None)
+    joblib.dump(abstimmungen, DUMP_NAME)
 
 
 @bot.tree.command(name="abstimmung_abbrechen", description="Brich eine Abstimmung ohne Ergebnis ab", guild=discord.Object(id=GUILD_ID))
@@ -206,6 +215,7 @@ async def abstimmung_abbrechen(interaction: discord.Interaction, nummer: int):
     view.save_to_csv()
     view.stop()
     abstimmungen.pop(sg_nummer, None)
+    joblib.dump(abstimmungen, DUMP_NAME)
 
 
 @bot.tree.command(name="meine_abstimmungen", description="Zeigt deine laufenden Abstimmungen", guild=discord.Object(id=GUILD_ID))
