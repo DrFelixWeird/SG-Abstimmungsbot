@@ -13,8 +13,8 @@ TOKEN = appsettings["Token"]
 
 
 f.close
-GUILD_ID = 531217410246574107  # Die Server-ID
-ROLE_ID = 1369781934598783068   # ID der Rolle für @Ping
+GUILD_ID = 797245611254087680  # Die Server-ID
+ROLE_ID = 852580008203517952   # ID der Rolle für @Ping
 DUMP_NAME = "data.sav"
 
 intents = discord.Intents.default()
